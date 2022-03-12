@@ -1,0 +1,204 @@
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>정답번호: <span id="answer"></span></div>
+    <div>차례: <span id="order">투수</span></div>
+    <div><input type="text" id="number"><button id="chek">입력</button></div>
+    <div><input readonly id="calculator"></div>
+    <div class='allRis'>
+        <div id="ris1"> </div>
+        <div id="ris2"> </div>
+        <div id="ris3"> </div>
+        <div id="ris4"> </div>
+        <div id="ris5"> </div>
+        <div id="ris6"> </div>
+        <div id="ris7"> </div>
+        <div id="ris8"> </div>
+        <div id="ris9"> </div>
+    </div>
+
+    <script>
+        let pitcher = '';
+        let hitter = '';
+        let ball = 0;
+        let strike = 0;
+        let count = 0;
+        let calculator = '';
+        const $number = document.querySelector("#number");
+        const $calculator = document.querySelector('#calculator');
+        const $chek = document.querySelector('#chek');
+        const $order = document.querySelector('#order');
+        const $answer = document.querySelector('#answer');
+        const $allRis = document.querySelector('#allRis');
+        const $ris1 = document.querySelector('#ris1');
+        const $ris2 = document.querySelector('#ris2');
+        const $ris3 = document.querySelector('#ris3');
+        const $ris4 = document.querySelector('#ris4');
+        const $ris5 = document.querySelector('#ris5');
+        const $ris6 = document.querySelector('#ris6');
+        const $ris7 = document.querySelector('#ris7');
+        const $ris8 = document.querySelector('#ris8');
+        const $ris9 = document.querySelector('#ris9');
+
+
+
+
+
+        const onClickButton = () => {
+            ball = 0;
+            strike = 0;
+            if(order.textContent ==='타수') {
+                count += 1;
+            }            
+            if (count === 10) {
+                
+                pitcher = '';
+                hitter = '';
+                ball = 0;
+                strike = 0;
+                count = 0;
+                $order.textContent = '투수';
+                $calculator.value = '';
+                $number.vlaue = '';
+                $answer.textContent = '';
+                alert('ㅠㅠ 10회 동안 맞추지 못하셨습니다 아쉽네요! 다음 기회를! 정답 : ' + pitcher);
+                $ris1.textContent = '';
+                $ris2.textContent = '';
+                $ris3.textContent = '';
+                $ris4.textContent = '';
+                $ris5.textContent = '';
+                $ris6.textContent = '';
+                $ris7.textContent = '';
+                $ris8.textContent = '';
+                $ris9.textContent = '';
+            }
+
+            if ($order.textContent === '투수') {
+                pitcher = $number.value;
+                $number.value = '';
+            }
+            if ($order.textContent === '타수') {
+                hitter = $number.value;
+                $number.value = '';
+            }
+            if (pitcher) {
+                $order.textContent = '타수';
+                $answer.textContent = '****';
+            }
+            let i = 0;
+            let j = 1;
+            while (i < 4) {
+                while (j < 4) {
+                    if (pitcher[i] === pitcher[j] || pitcher.length !== 4 || !parseInt(pitcher) || pitcher.includes('0')) {
+                        alert('규칙을 잘 읽어주세요! 0이 들어가지 않고, 중복되지 않은 4자리 숫자를 입력해 주세요');
+                        pitcher = '';
+                        $order.textContent = '투수';
+                        $answer.textContent = '';
+                        $number.value = '';
+                        i = 5;
+                        j = 5;
+                    }
+                    j++
+                }
+                i++
+                j = i + 1;
+            }
+
+            if (hitter) {
+                i = 0;
+                j = 1;
+                while (i < 4) {
+                    while (j < 4) {
+                        if (hitter[i] === hitter[j] || hitter.length !== 4 || !parseInt(hitter) || hitter.includes('0')) {
+                            alert('규칙을 잘 읽어주세요! 0이 들어가지 않고, 중복되지 않은 4자리 숫자를 입력해 주세요');
+                            hitter = '';
+                            i = 5;
+                            j = 5;
+                        }
+                        j++
+                    }
+                    i++
+                    j = i + 1;
+                }
+                if (hitter) {
+                    for (i = 0; i < 4; i++) {
+                        for (j = 0; j < 4; j++) {
+                            if (pitcher[i] === hitter[j]) {
+                                ball += 1;
+                                if (pitcher[i] === hitter[i]) {
+                                    ball = ball - 1;
+                                    strike += 1;
+                                    if (strike === 4) {
+                                        alert('홈런!!!! 정답을 맞추셨습니다!!~~ 정답 :' + pitcher);
+                                        pitcher = '';
+                                        hitter = '';
+                                        ball = 0;
+                                        strike = 0;
+                                        count = 0;
+                                        $order.textContent = '투수';
+                                        $calculator.value = '';
+                                        $number.vlaue = '';
+                                        $answer.textContent = '';
+                                        $ris1.textContent = '';
+                                        $ris2.textContent = '';
+                                        $ris3.textContent = '';
+                                        $ris4.textContent = '';
+                                        $ris5.textContent = '';
+                                        $ris6.textContent = '';
+                                        $ris7.textContent = '';
+                                        $ris8.textContent = '';
+                                        $ris9.textContent = '';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if ($order.textContent !== '투수') {
+                        claculator = '=' + ball + ' 볼 ' + strike + ' 스트라이크';
+                        $calculator.value = claculator;
+                        switch (count) {
+                            case 1:
+                                $ris1.textContent += hitter + claculator;
+                                break;
+                            case 2:
+                                $ris2.textContent += hitter + claculator;
+                                break;
+                            case 3:
+                                $ris3.textContent += hitter + claculator;
+                                break;
+                            case 4:
+                                $ris4.textContent += hitter + claculator;
+                                break;
+                            case 5:
+                                $ris5.textContent += hitter + claculator;
+                                break;
+                            case 6:
+                                $ris6.textContent += hitter + claculator;
+                                break;
+                            case 7:
+                                $ris7.textContent += hitter + claculator;
+                                break;
+                            case 8:
+                                $ris8.textContent += hitter + claculator;
+                                break;
+                            case 9:
+                                $ris9.textContent += hitter + claculator;
+                                break;
+                        }
+                    }
+                }
+                $number.value = '';
+            }
+        }
+        $chek.addEventListener('click', onClickButton);
+    </script>
+</body>
+
+</html>
